@@ -16,3 +16,9 @@
 
 # VSCode Debbuger configuration json
 .vscode/
+
+# token of access to google api
+*token*.json
+
+# Credentials of ID app
+*credential*.json
