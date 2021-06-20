@@ -36,18 +36,6 @@ func (c *CredentialAuthService) Read() error {
 	return nil
 }
 
-func (c *CredentialAuthService) Path() *string {
-	return &c.path
-}
-
-func (c CredentialAuthService) Data() *[]byte {
-	return &c.data
-}
-
-func (c *CredentialAuthService) Error() error {
-	return c.err
-}
-
 func (c *CredentialAuthService) GetConfig(fromUrlService string) error {
 
 	config, err := google.ConfigFromJSON(c.data, fromUrlService)
@@ -59,8 +47,4 @@ func (c *CredentialAuthService) GetConfig(fromUrlService string) error {
 	c.config = config
 
 	return nil
-}
-
-func (c *CredentialAuthService) Config() *oauth2.Config {
-	return c.config
 }
