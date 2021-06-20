@@ -17,7 +17,7 @@ var isCredentialLoadableTest = []struct {
 	{"./otro", "abcdef", false},
 }
 
-func TestRead(t *testing.T) {
+func TestCredentialAuthServiceLoad(t *testing.T) {
 	var c CredentialAuthService
 
 	err := ioutil.WriteFile(
