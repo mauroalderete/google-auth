@@ -19,10 +19,6 @@ type CredentialAuthService struct {
 func (c *CredentialAuthService) Load(path string) error {
 	c.path = filepath.Clean(path)
 
-	return c.Read()
-}
-
-func (c *CredentialAuthService) Read() error {
 	data, err := ioutil.ReadFile(c.path)
 	if err != nil {
 		log.Printf("[CredentialAuthService::Load] %v", err)
@@ -36,31 +32,15 @@ func (c *CredentialAuthService) Read() error {
 	return nil
 }
 
-func (c *CredentialAuthService) Path() *string {
-	return &c.path
-}
-
-func (c CredentialAuthService) Data() *[]byte {
-	return &c.data
-}
-
-func (c *CredentialAuthService) Error() error {
-	return c.err
-}
-
 func (c *CredentialAuthService) GetConfig(fromUrlService string) error {
 
 	config, err := google.ConfigFromJSON(c.data, fromUrlService)
 	if err != nil {
-		log.Printf("[CredentialAuthService::GetConfig] %v con %v", err, c.data)
+		log.Printf("[CredentialAuthService::GetConfig] %v", err)
 		return err
 	}
 
 	c.config = config
 
 	return nil
-}
-
-func (c *CredentialAuthService) Config() *oauth2.Config {
-	return c.config
 }

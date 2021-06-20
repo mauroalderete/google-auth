@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 20/06/2021 Feature refactoring
+
+Descarto codigo en desuso
+Renombro metodos
+Genero pruebas unitarias simples, sin emulacion de entorno
+Retiro codigo de ejemplo
+
 ## 19/06/2021 Feature Import codebase
 
 Resuelvo el problema de packetes e importaciones que tenia el proyecto anterior: https://gitlab.com/vyra/vyra-database-migration

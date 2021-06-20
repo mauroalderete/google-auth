@@ -11,17 +11,16 @@ type AuthServiceSpreadsheet struct {
 }
 
 func (s *AuthServiceSpreadsheet) Initialize(credentialFile string, tokenFile string, readonly bool) error {
-	err := s.Credential.Load(credentialFile)
+
+	var base auth_service.AuthService
+	err := base.Initialize(credentialFile, tokenFile)
 	if err != nil {
-		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", credentialFile, err)
+		log.Printf("[AuthServiceSpreadsheets::Initialize] Base %v", err)
 		return err
 	}
 
-	err = s.Token.Load(tokenFile)
-	if err != nil {
-		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", tokenFile, err)
-		return err
-	}
+	s.Credential = base.Credential
+	s.Token = base.Token
 
 	s.Readonly = readonly
 	if s.Readonly {

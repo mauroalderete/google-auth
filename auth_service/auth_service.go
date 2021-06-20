@@ -22,23 +22,40 @@ type AuthService struct {
 	Client     *http.Client
 }
 
+func (s *AuthService) Initialize(credentialFile string, tokenFile string) error {
+
+	err := s.Credential.Load(credentialFile)
+	if err != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", credentialFile, err)
+		return err
+	}
+
+	err = s.Token.Load(tokenFile)
+	if err != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", tokenFile, err)
+		return err
+	}
+
+	return nil
+}
+
 func (s *AuthService) Authenticate() error {
 
 	//valido que tenga una credencial inicializada
-	if s.Credential.Error() != nil {
+	if s.Credential.err != nil {
 		log.Println("[AuthService::Authenticate] La credencial no estan lista")
-		return s.Credential.Error()
+		return s.Credential.err
 	}
 
 	//valido que tenga un token inicializado
-	if s.Token.Error() != nil {
+	if s.Token.err != nil {
 		log.Println("[AuthService::Authenticate] El token no esta listo")
-		return s.Token.Error()
+		return s.Token.err
 	}
 
 	//obtengo un cliente a partir de la configuracion de credencial inicializada
 
-	s.Client = s.Credential.Config().Client(context.Background(), s.Token.Token())
+	s.Client = s.Credential.config.Client(context.Background(), s.Token.token)
 
 	return nil
 }
@@ -46,9 +63,9 @@ func (s *AuthService) Authenticate() error {
 func (s *AuthService) RequestToken() error {
 
 	//valido que tenga una credencial inicializada
-	if s.Credential.Error() != nil {
+	if s.Credential.err != nil {
 		log.Println("[AuthService::Authenticate] La credencial no estan lista")
-		return s.Credential.Error()
+		return s.Credential.err
 	}
 
 	err := s.Token.GetTokenFromWeb(s.Credential.config)
