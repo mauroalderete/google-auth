@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 20/06/2021 Release v1.0.0
+
+Libero primera version que incluye los servicios de authenticacion a apis de google
+Por el momento solo es posible conectar a la api de spreadsheets
+
+Se documenta caso de uso
+
 ## 20/06/2021 Feature refactoring
 
 Descarto codigo en desuso
