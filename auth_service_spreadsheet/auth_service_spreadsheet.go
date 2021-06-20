@@ -6,10 +6,16 @@ import (
 	"gitlab.com/rayquen-google/golang/auth/auth_service"
 )
 
+// AuthServiceSpreadsheet es una especialización de AuthService
+// Se compone de los mismos campos y estructuras
+// Permite construir comportamientos especificos
 type AuthServiceSpreadsheet struct {
 	auth_service.AuthService
 }
 
+// Amplia la inicializacion de AuthService agregando el modo de acceso
+// y especificando la Url del servicio a consumir
+// Efectua la solicitud para obtener la configuración de la autenticación
 func (s *AuthServiceSpreadsheet) Initialize(credentialFile string, tokenFile string, readonly bool) error {
 
 	var base auth_service.AuthService
