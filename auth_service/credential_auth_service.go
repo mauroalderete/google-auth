@@ -19,10 +19,6 @@ type CredentialAuthService struct {
 func (c *CredentialAuthService) Load(path string) error {
 	c.path = filepath.Clean(path)
 
-	return c.Read()
-}
-
-func (c *CredentialAuthService) Read() error {
 	data, err := ioutil.ReadFile(c.path)
 	if err != nil {
 		log.Printf("[CredentialAuthService::Load] %v", err)
