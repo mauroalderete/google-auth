@@ -36,7 +36,7 @@ func (c *CredentialAuthService) GetConfig(fromUrlService string) error {
 
 	config, err := google.ConfigFromJSON(c.data, fromUrlService)
 	if err != nil {
-		log.Printf("[CredentialAuthService::GetConfig] %v con %v", err, c.data)
+		log.Printf("[CredentialAuthService::GetConfig] %v", err)
 		return err
 	}
 
