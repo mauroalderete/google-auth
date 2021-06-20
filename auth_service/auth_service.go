@@ -31,9 +31,9 @@ func (s *AuthService) Authenticate() error {
 	}
 
 	//valido que tenga un token inicializado
-	if s.Token.Error() != nil {
+	if s.Token.err != nil {
 		log.Println("[AuthService::Authenticate] El token no esta listo")
-		return s.Token.Error()
+		return s.Token.err
 	}
 
 	//obtengo un cliente a partir de la configuracion de credencial inicializada

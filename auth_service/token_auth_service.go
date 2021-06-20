@@ -18,27 +18,10 @@ type TokenAuthService struct {
 	token *oauth2.Token
 }
 
-func (f *TokenAuthService) Load(path string) error {
-	f.path = filepath.Clean(path)
+func (t *TokenAuthService) Load(path string) error {
+	t.path = filepath.Clean(path)
 
-	return f.loadToken()
-}
-
-func (f *TokenAuthService) Path() *string {
-	return &f.path
-}
-
-func (f *TokenAuthService) Data() *[]byte {
-	return &f.data
-}
-
-func (f *TokenAuthService) Error() error {
-	return f.err
-}
-
-func (t *TokenAuthService) loadToken() error {
-
-	f, err := os.Open(*t.Path())
+	f, err := os.Open(t.path)
 	if err != nil {
 		log.Printf("[TokenAuthService::loadToken] open %v", err)
 		return err
@@ -52,10 +35,6 @@ func (t *TokenAuthService) loadToken() error {
 	}
 	t.token = tok
 	return nil
-}
-
-func (t *TokenAuthService) Token() *oauth2.Token {
-	return t.token
 }
 
 func (t *TokenAuthService) GetTokenFromWeb(config *oauth2.Config) error {
