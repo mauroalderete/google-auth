@@ -13,7 +13,6 @@ import (
 
 type TokenAuthService struct {
 	path  string
-	data  []byte
 	err   error
 	token *oauth2.Token
 }
