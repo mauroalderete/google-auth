@@ -22,6 +22,23 @@ type AuthService struct {
 	Client     *http.Client
 }
 
+func (s *AuthService) Initialize(credentialFile string, tokenFile string) error {
+
+	err := s.Credential.Load(credentialFile)
+	if err != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", credentialFile, err)
+		return err
+	}
+
+	err = s.Token.Load(tokenFile)
+	if err != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", tokenFile, err)
+		return err
+	}
+
+	return nil
+}
+
 func (s *AuthService) Authenticate() error {
 
 	//valido que tenga una credencial inicializada
