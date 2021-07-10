@@ -19,14 +19,13 @@ type AuthServiceSpreadsheet struct {
 func (s *AuthServiceSpreadsheet) Initialize(credentialFile string, tokenFile string, readonly bool) error {
 
 	var base auth_service.AuthService
-	err := base.Initialize(credentialFile, tokenFile)
-	if err != nil {
-		log.Printf("[AuthServiceSpreadsheets::Initialize] Base %v", err)
-		return err
+	errCredential, errToken := base.Initialize(credentialFile, tokenFile)
+	if errCredential != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] Base %v", errCredential)
+		return errCredential
 	}
 
 	s.Credential = base.Credential
-	s.Token = base.Token
 
 	s.Readonly = readonly
 	if s.Readonly {
@@ -35,10 +34,16 @@ func (s *AuthServiceSpreadsheet) Initialize(credentialFile string, tokenFile str
 		s.Url = "https://www.googleapis.com/auth/spreadsheets"
 	}
 
-	err = s.Credential.GetConfig(s.Url)
+	err := s.Credential.GetConfig(s.Url)
 	if err != nil {
 		log.Printf("[AuthServiceSpreadsheets::Initialize] %v", err)
 		return err
+	}
+
+	s.Token = base.Token
+	if errToken != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] Base %v", errToken)
+		return errToken
 	}
 
 	return nil
