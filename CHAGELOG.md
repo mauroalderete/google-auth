@@ -1,5 +1,15 @@
 # CHANGELOG.md
 
+## 10/07/2021 Hotfix v1.0.1
+
+Cuando se solicitaba el token a partir de las credenciales existentes, si el archivo de destino, token.json por ejemplo, no existe entonces la referencia al objeto config de las credenciales se mantenia nula. Esto se daba a que el servicio de autorizacion de spreadsheet nunca llegaba a parsear la configuración de las credenciales.
+
+Esto se solucionó modificando el método base de inicialización para que retorne dos clases de errores, cada uno correspondiente a cada archivo.
+
+De esta forma, si la inicialización produjo un error únicamente al procesar el archivo de token inaccesible, pero no con las credenciales, el parseo de las credenciales se lleva a cabo de todas maneras. Al final la inicialización de AuthServiceSpreadsheet seguira dando error por el token.
+
+Con esto se permite la instanciación de un objeto *oauth2.Config a partir de las credenciales. Lo que permite ser consultado al solicitar un toquen nuevo si es necesario.
+
 ## 20/06/2021 Release v1.0.0
 
 Libero primera version que incluye los servicios de authenticacion a apis de google
