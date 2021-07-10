@@ -35,21 +35,19 @@ type AuthService struct {
 // para ejecutar otras operaciones como RequestToken, es recomendable
 // utilizar una ubicación real, ya que en caso de persistir el token
 // se realizara en esa ruta
-func (s *AuthService) Initialize(credentialFile string, tokenFile string) error {
+func (s *AuthService) Initialize(credentialFile string, tokenFile string) (error, error) {
 
-	err := s.Credential.Load(credentialFile)
-	if err != nil {
-		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", credentialFile, err)
-		return err
+	errCredential := s.Credential.Load(credentialFile)
+	if errCredential != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", credentialFile, errCredential)
 	}
 
-	err = s.Token.Load(tokenFile)
-	if err != nil {
-		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", tokenFile, err)
-		return err
+	errToken := s.Token.Load(tokenFile)
+	if errToken != nil {
+		log.Printf("[AuthServiceSpreadsheets::Initialize] con %v %v", tokenFile, errToken)
 	}
 
-	return nil
+	return errCredential, errToken
 }
 
 // Authenticate gestiona el procedimiento de autenticación
